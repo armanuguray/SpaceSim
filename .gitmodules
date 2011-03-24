@@ -1,0 +1,3 @@
+[submodule "WebGLU"]
+	path = WebGLU
+	url = https://github.com/OneGeek/WebGLU.git
