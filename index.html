@@ -2,6 +2,15 @@
 <html>
 	<head>
 		<title> Space Game </title>
+		<!-- Interaction -->
+		<script type="text/javascript" src="src/GLFileLoader.js"></script>
+		<script type="text/javascript">
+			function initGL()
+			{
+				loadShaderFromPath(null,null, "shaders/osman.vert");
+			}
+		</script>
+		<!-- Style code -->
 		<style type="text/css">
 			body {
 				background-color:#B2C7CC;
@@ -20,9 +29,9 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body onload="initGL()">
 		<h1> Super Awesome Space Simulator </h1>
 		<p> This will eventually have a WebGL accelerated space simulation game. It will be pretty awesome </p>
-		<canvas id="game-canvas"/>
+		<canvas id="game-canvas"></canvas>
 	</body>
 </html>
