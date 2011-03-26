@@ -3,12 +3,49 @@
 	<head>
 		<title> Space Game </title>
 		<!-- Interaction -->
+		<script type="text/javascript" src="src/common/webgl-utils.js"></script>
 		<script type="text/javascript" src="src/GLFileLoader.js"></script>
 		<script type="text/javascript">
+			var canvas; // canvas element that we're drawing on
+			var gl; // the WebGL context
 			function initGL()
 			{
-				loadShaderFromPath(null,null, "shaders/osman.vert");
+				canvas = document.getElementById("game-canvas");
+				gl = WebGLUtils.setupWebGL(canvas);
+				if (!gl) return;
+				
+				// setup the initial size
+				sizeChanged();
+				
+				gl.clearColor(0.0, 0.0, 0.0, 1.0);
+				gl.enable(gl.DEPTH_TEST);
+				//loadShaderFromPath(null,null, "shaders/osman.vert");
+				
+				// start rendering per display frame rate
+				function render() 
+				{
+					window.requestAnimFrame(render, canvas);
+					drawFrame();
+					gl.flush();
+				}
+				render();
 			}
+			
+			function drawFrame()
+			{
+				gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+			}
+			
+			function sizeChanged()
+			{
+				console.log("Window size changed.");
+				var w = Math.floor(window.innerWidth * 0.8);
+            	var h = Math.floor(window.innerHeight * 0.8);
+            	canvas.width = w;
+            	canvas.height = h;
+            	if (gl) gl.viewport(0, 0, w, h); 
+			}
+			
 		</script>
 		<!-- Style code -->
 		<style type="text/css">
@@ -20,18 +57,21 @@
 				text-align:center;
 			}
 			p {
-				color:#;
+				color:#000;
 				text-align:center;
 			}
 			canvas {
-				border:2px solid #000
+				border:2px solid #FFF;
 			 	text-align:center;
 			}
 		</style>
 	</head>
-	<body onload="initGL()">
+	<body onload="initGL()" onresize="sizeChanged()">
 		<h1> Super Awesome Space Simulator </h1>
 		<p> This will eventually have a WebGL accelerated space simulation game. It will be pretty awesome </p>
-		<canvas id="game-canvas"></canvas>
+		<div id="game-div" style="text-align:center;">
+			<canvas id="game-canvas"></canvas>
+		</div>
+		<p>Awesomeness</p>
 	</body>
 </html>
